@@ -5,7 +5,7 @@ Original Project from Bjoern Biesenbach, see https://github.com/elmo2k3/dabpi_ct
 
 ## News
 
-10.12.2016 - initial github project, only DAB implemented
+10.12.2016 - initial github project, only DAB implemented, contributors welcome
 
 ### Installation Instructions
 
@@ -26,7 +26,7 @@ go to "Device Drivers" --> "Sound Card Support" --> "Advanced Linux Sound Archit
 
 say "module" for "Support for DABPi featuring a Si4688 FM/FMHD/DAB receiver"
 
-compile, install the kernel and modules, add following lines to /boot/config.txt
+Compile and install the kernel + modules, add following lines to /boot/config.txt
 
 ```bash
 dtparam=i2s=on
@@ -34,7 +34,7 @@ dtparam=spi=on
 
 dtoverlay=rpi-dabpi
 ```
-then reboot. On success you should see correct I2S initializing and an alsa recording source:
+Then reboot. On success you should see correct I2S initialization and a new alsa recording source:
 
 ```bash
 root@pidev:~# dmesg |grep i2s
@@ -107,7 +107,7 @@ SET_PROPERTY:
   0000  00 80 80 00 c0                                   .....
 
 ```
-Set Frequency Region (0 - 15)
+Set Frequency depending on your Region (0 - 16) - example for South Tyrol
 
 ```bash
 root@pidev:/anus/dabpi# ./dabpi_ctl -j 15
@@ -151,7 +151,6 @@ Services:      12
  10 |       d315 | RAS B5 aktuell   | 7 
  11 |       df95 | RAS KIRAKA+      | 8 
  ```
- 
  Start one of the services in ensemble 
  
  ```bash
@@ -163,6 +162,11 @@ DAB_START_DIGITAL_SERVICE:
   0000  00 81 80 00 c0                                   .....
 ```
 
-Enjoy ;-)
- 
+Start alsa playback
+
+```bash
+ssh hje@pidev 'arecord -D hw:0,0 -f dat -' | aplay -f dat -
+```
+
+Enjoy the music ;-)
  
