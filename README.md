@@ -24,7 +24,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 ```
 go to "Device Drivers" --> "Sound Card Support" --> "Advanced Linux Sound Architecture" --> "Alsa for SoC Audio Support"
 
-say <M> for "Support for DABPi featuring a Si4688 FM/FMHD/DAB receiver"
+say "module" for "Support for DABPi featuring a Si4688 FM/FMHD/DAB receiver"
 
 compile, install the kernel and modules, add following lines to /boot/config.txt
 
@@ -34,7 +34,18 @@ dtparam=spi=on
 
 dtoverlay=rpi-dabpi
 ```
-then reboot
+then reboot. On success you should see correct I2S initializing and an alsa recording source:
+
+```bash
+root@pidev:~# dmesg |grep i2s
+[    6.411170] snd-rpi-dabpi soc:sound: si468x-hifi <-> 3f203000.i2s mapping ok
+
+root@pidev:~# arecord -l
+**** List of CAPTURE Hardware Devices ****
+card 0: sndrpirpidabpi [snd_rpi_rpi_dabpi], device 0: DABPi Hifi si468x-hifi-0 []
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
+```
 
 Step 2: compile Si4688 controller software
 
@@ -43,6 +54,20 @@ git clone https://github.com/teknoid/dabpi
 cd dabpi
 make clean && make
 ```
+Step 3: place firmware in ../si46xx_firmware/
+
+```bash
+root@pidev:/anus/si46xx_firmware# ls -la
+total 2040
+drwxr-xr-x 2 hje  hje     4096 Dec  9  2016 .
+drwxrwxr-x 5 root users   4096 Dec 10  2016 ..
+-rw-r--r-- 1 hje  hje   517708 Aug 15  2014 dab_radio_3_2_7.bif
+-rw-r--r-- 1 hje  hje   521448 Dec  9  2015 dab_radio_5_0_5.bin
+-rw-r--r-- 1 hje  hje   493128 Aug 15  2014 fmhd_radio_3_0_19.bif
+-rw-r--r-- 1 hje  hje   530180 Dec  2  2015 fmhd_radio_5_0_4.bin
+-rw-r--r-- 1 hje  hje     5796 Nov  9  2012 rom00_patch.016.bin
+```
+
 ### Usage
 
 Enter DAB+ mode
@@ -131,28 +156,9 @@ Services:      12
  
  ```bash
  root@pidev:/anus/dabpi# ./dabpi_ctl -f 0
-dabpi_ctl version v0.01-43-g369d8de
-DAB_GET_DIGITAL_SERVICE_LIST:
-  0000  00 81 80 00 c0 56 01                             .....V.
-List size:     342
-List version:  36
-Services:      12
 
- Nr | Service ID | Service Name     | Component IDs
---------------------------------------------------
- 00 |       42f1 | RAS Swiss Pop+   | 11 
- 01 |       42f2 | RAS SwissClassic | 10 
- 02 |       43e2 | RAS RSI Rete 2+  | 12 
- 03 |       5203 | Rai Radio3+      | 3 
- 04 |       5301 | Rai Radio1+ TAA  | 1 
- 05 |       5302 | Rai Radio2+ TAA  | 2 
- 06 |       5304 | RAI SUEDTIROL+   | 4 
- 07 |       d220 | RAS DKULTUR+     | 9 
- 08 |       d313 | RAS BAYERN 3     | 5 
- 09 |       d314 | RAS BR-KLASSIK   | 6 
- 10 |       d315 | RAS B5 aktuell   | 7 
- 11 |       df95 | RAS KIRAKA+      | 8 
-Starting service RAS Swiss Pop+   42f1 b
+...
+
 DAB_START_DIGITAL_SERVICE:
   0000  00 81 80 00 c0                                   .....
 ```
