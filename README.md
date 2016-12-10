@@ -157,7 +157,7 @@ Services:      12
  root@pidev:/anus/dabpi# ./dabpi_ctl -f 0
 
 ...
-
+Starting service RAS Swiss Pop+   42f1 b
 DAB_START_DIGITAL_SERVICE:
   0000  00 81 80 00 c0                                   .....
 ```
