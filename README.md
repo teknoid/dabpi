@@ -5,6 +5,7 @@ Original Project from Bjoern Biesenbach, see https://github.com/elmo2k3/dabpi_ct
 
 ## News
 
+13.12.2016 - added FM functionality
 10.12.2016 - initial github project, only DAB implemented, contributors welcome
 
 ### Installation Instructions
