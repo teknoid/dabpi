@@ -99,7 +99,7 @@ void si46xx_fm_tune_freq(uint32_t khz, uint16_t antcap) {
 	data[4] = antcap & 0xFF;
 	data[5] = (antcap >> 8) & 0xFF;
 	data[6] = 0;
-	spi(data, 6);
+	spi(data, 7);
 
 	while (timeout--) {
 		data[0] = 0;
@@ -185,7 +185,7 @@ void si46xx_fm_rds_blockcount(void) {
 }
 
 void si46xx_fm_seek_start(uint8_t up, uint8_t wrap) {
-	uint8_t data[5];
+	uint8_t data[6];
 
 	data[0] = SI46XX_FM_SEEK_START;
 	data[1] = 0;
@@ -193,7 +193,7 @@ void si46xx_fm_seek_start(uint8_t up, uint8_t wrap) {
 	data[3] = 0;
 	data[4] = 0;
 	data[5] = 0;
-	spi(data, 5);
+	spi(data, 6);
 
 	si46xx_reply("FM_SEEK_START");
 }
