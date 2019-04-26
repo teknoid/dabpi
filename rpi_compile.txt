@@ -1,0 +1,18 @@
+cd linux
+KERNEL=kernel7
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2709_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage modules dtbs
+
+sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=/media/home_directory/rootfs modules_install
+
+
+
+sudo cp /media/home_directory/boot/$KERNEL.img /media/home_directory/boot/$KERNEL-backup-2.img
+sudo cp arch/arm/boot/zImage /media/home_directory/boot/$KERNEL.img
+sudo cp arch/arm/boot/dts/*.dtb /media/home_directory/boot/overlays/
+sudo cp arch/arm/boot/dts/overlays/*.dtb* /media/home_directory/boot/overlays/
+sudo cp arch/arm/boot/dts/overlays/README /media/home_directory/boot/overlays/
+sudo umount /media/home_directory/boot
+sudo umount /media/home_directory/rootfs/
