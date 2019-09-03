@@ -42,9 +42,10 @@ void si46xx_init_dab(void) {
 //	si46xx_set_property(SI46XX_DAB_CTRL_DAB_ACF_ENABLE, 0x0000);
 //	si46xx_set_property(SI46XX_DIGITAL_SERVICE_INT_SOURCE, 1); // enable DSRVPAKTINT interrupt ??
 	si46xx_set_property(SI46XX_DAB_TUNE_FE_CFG, 0x0001); // front end switch closed
-	si46xx_set_property(SI46XX_DAB_TUNE_FE_VARM, 0x1710); // Front End Varactor configuration (Changed from '10' to 0x1710 to improve receiver sensitivity - Bjoern 27.11.14)
-	si46xx_set_property(SI46XX_DAB_TUNE_FE_VARB, 0x1711); // Front End Varactor configuration (Changed from '10' to 0x1711 to improve receiver sensitivity - Bjoern 27.11.14)
+	//si46xx_set_property(SI46XX_DAB_TUNE_FE_VARM, 0x1710); // Front End Varactor configuration (Changed from '10' to 0x1710 to improve receiver sensitivity - Bjoern 27.11.14)
+	//si46xx_set_property(SI46XX_DAB_TUNE_FE_VARB, 0x1711); // Front End Varactor configuration (Changed from '10' to 0x1711 to improve receiver sensitivity - Bjoern 27.11.14)
 	si46xx_set_property(SI46XX_PIN_CONFIG_ENABLE, 0x0002); // enable I2S output (BUG!!! either DAC or I2S seems to work)
+	si46xx_set_property(SI46XX_DIGITAL_IO_OUTPUT_SELECT, 0x0000); // I2S Slave Mode
 }
 
 void si46xx_dab_digrad_status_print(struct dab_digrad_status_t *status) {

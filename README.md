@@ -3,6 +3,8 @@ Raspberry Si4688 FM / DAB+ Receiver
 
 Original Project from Bjoern Biesenbach, see https://github.com/elmo2k3/dabpi_ctl
 
+New Boards can be ordered from Christoph Orth at https://ugreen.eu/product/ugreen-dab-board/
+
 ## News
 
 13.12.2016 - added FM functionality

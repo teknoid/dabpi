@@ -1,1 +1,0 @@
-gpio.o: ../gpio.c
