@@ -1,0 +1,541 @@
+diff -rupN linux-original/arch/arm/boot/dts/overlays/Makefile linux/arch/arm/boot/dts/overlays/Makefile
+--- linux-original/arch/arm/boot/dts/overlays/Makefile	2019-04-26 13:21:40.869441486 +0200
++++ linux/arch/arm/boot/dts/overlays/Makefile	2019-04-26 08:22:24.336117000 +0200
+@@ -53,6 +53,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	hifiberry-dacplusadc.dtbo \
+ 	hifiberry-digi.dtbo \
+ 	hifiberry-digi-pro.dtbo \
++        rpi-dabpi.dtbo \
+ 	hy28a.dtbo \
+ 	hy28b.dtbo \
+ 	hy28b-2017.dtbo \
+diff -rupN linux-original/arch/arm/boot/dts/overlays/rpi-dabpi-overlay.dts linux/arch/arm/boot/dts/overlays/rpi-dabpi-overlay.dts
+--- linux-original/arch/arm/boot/dts/overlays/rpi-dabpi-overlay.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux/arch/arm/boot/dts/overlays/rpi-dabpi-overlay.dts	2019-04-25 16:15:07.516256000 +0200
+@@ -0,0 +1,35 @@
++// Definitions for DABPi
++/dts-v1/;
++/plugin/;
++
++/ {
++	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
++
++
++	fragment@0 {
++		target = <&i2s>;
++		__overlay__ {
++			status = "okay";
++		};
++	};
++
++	fragment@1 {
++		target-path = "/";
++		__overlay__ {
++			si468x-codec {
++				#sound-dai-cells = <0>;
++				compatible = "ti,si468x";
++				status = "okay";
++			};
++		};
++	};
++
++	fragment@2 {
++		target = <&sound>;
++		__overlay__ {
++			compatible = "rpi,rpi-dabpi";
++			i2s-controller = <&i2s>;
++			status = "okay";
++		};
++	};
++};
+diff -rupN linux-original/arch/arm64/boot/dts/overlays/Makefile linux/arch/arm64/boot/dts/overlays/Makefile
+--- linux-original/arch/arm64/boot/dts/overlays/Makefile	2019-04-26 13:21:40.869441486 +0200
++++ linux/arch/arm64/boot/dts/overlays/Makefile	2019-04-26 08:22:24.336117000 +0200
+@@ -53,6 +53,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	hifiberry-dacplusadc.dtbo \
+ 	hifiberry-digi.dtbo \
+ 	hifiberry-digi-pro.dtbo \
++        rpi-dabpi.dtbo \
+ 	hy28a.dtbo \
+ 	hy28b.dtbo \
+ 	hy28b-2017.dtbo \
+diff -rupN linux-original/arch/arm64/boot/dts/overlays/rpi-dabpi-overlay.dts linux/arch/arm64/boot/dts/overlays/rpi-dabpi-overlay.dts
+--- linux-original/arch/arm64/boot/dts/overlays/rpi-dabpi-overlay.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux/arch/arm64/boot/dts/overlays/rpi-dabpi-overlay.dts	2019-04-25 16:15:07.516256000 +0200
+@@ -0,0 +1,35 @@
++// Definitions for DABPi
++/dts-v1/;
++/plugin/;
++
++/ {
++	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
++
++
++	fragment@0 {
++		target = <&i2s>;
++		__overlay__ {
++			status = "okay";
++		};
++	};
++
++	fragment@1 {
++		target-path = "/";
++		__overlay__ {
++			si468x-codec {
++				#sound-dai-cells = <0>;
++				compatible = "ti,si468x";
++				status = "okay";
++			};
++		};
++	};
++
++	fragment@2 {
++		target = <&sound>;
++		__overlay__ {
++			compatible = "rpi,rpi-dabpi";
++			i2s-controller = <&i2s>;
++			status = "okay";
++		};
++	};
++};
+diff -rupN linux-original/scripts/dtc/include-prefixes/arm/overlays/Makefile linux/scripts/dtc/include-prefixes/arm/overlays/Makefile
+--- linux-original/scripts/dtc/include-prefixes/arm/overlays/Makefile	2019-04-26 13:21:40.869441486 +0200
++++ linux/scripts/dtc/include-prefixes/arm/overlays/Makefile	2019-04-26 08:22:24.336117000 +0200
+@@ -53,6 +53,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	hifiberry-dacplusadc.dtbo \
+ 	hifiberry-digi.dtbo \
+ 	hifiberry-digi-pro.dtbo \
++        rpi-dabpi.dtbo \
+ 	hy28a.dtbo \
+ 	hy28b.dtbo \
+ 	hy28b-2017.dtbo \
+diff -rupN linux-original/scripts/dtc/include-prefixes/arm/overlays/rpi-dabpi-overlay.dts linux/scripts/dtc/include-prefixes/arm/overlays/rpi-dabpi-overlay.dts
+--- linux-original/scripts/dtc/include-prefixes/arm/overlays/rpi-dabpi-overlay.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux/scripts/dtc/include-prefixes/arm/overlays/rpi-dabpi-overlay.dts	2019-04-25 16:15:07.516256000 +0200
+@@ -0,0 +1,35 @@
++// Definitions for DABPi
++/dts-v1/;
++/plugin/;
++
++/ {
++	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
++
++
++	fragment@0 {
++		target = <&i2s>;
++		__overlay__ {
++			status = "okay";
++		};
++	};
++
++	fragment@1 {
++		target-path = "/";
++		__overlay__ {
++			si468x-codec {
++				#sound-dai-cells = <0>;
++				compatible = "ti,si468x";
++				status = "okay";
++			};
++		};
++	};
++
++	fragment@2 {
++		target = <&sound>;
++		__overlay__ {
++			compatible = "rpi,rpi-dabpi";
++			i2s-controller = <&i2s>;
++			status = "okay";
++		};
++	};
++};
+diff -rupN linux-original/scripts/dtc/include-prefixes/arm64/overlays/Makefile linux/scripts/dtc/include-prefixes/arm64/overlays/Makefile
+--- linux-original/scripts/dtc/include-prefixes/arm64/overlays/Makefile	2019-04-26 13:21:40.869441486 +0200
++++ linux/scripts/dtc/include-prefixes/arm64/overlays/Makefile	2019-04-26 08:22:24.336117000 +0200
+@@ -53,6 +53,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	hifiberry-dacplusadc.dtbo \
+ 	hifiberry-digi.dtbo \
+ 	hifiberry-digi-pro.dtbo \
++        rpi-dabpi.dtbo \
+ 	hy28a.dtbo \
+ 	hy28b.dtbo \
+ 	hy28b-2017.dtbo \
+diff -rupN linux-original/scripts/dtc/include-prefixes/arm64/overlays/rpi-dabpi-overlay.dts linux/scripts/dtc/include-prefixes/arm64/overlays/rpi-dabpi-overlay.dts
+--- linux-original/scripts/dtc/include-prefixes/arm64/overlays/rpi-dabpi-overlay.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux/scripts/dtc/include-prefixes/arm64/overlays/rpi-dabpi-overlay.dts	2019-04-25 16:15:07.516256000 +0200
+@@ -0,0 +1,35 @@
++// Definitions for DABPi
++/dts-v1/;
++/plugin/;
++
++/ {
++	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
++
++
++	fragment@0 {
++		target = <&i2s>;
++		__overlay__ {
++			status = "okay";
++		};
++	};
++
++	fragment@1 {
++		target-path = "/";
++		__overlay__ {
++			si468x-codec {
++				#sound-dai-cells = <0>;
++				compatible = "ti,si468x";
++				status = "okay";
++			};
++		};
++	};
++
++	fragment@2 {
++		target = <&sound>;
++		__overlay__ {
++			compatible = "rpi,rpi-dabpi";
++			i2s-controller = <&i2s>;
++			status = "okay";
++		};
++	};
++};
+diff -rupN linux-original/sound/soc/bcm/Kconfig linux/sound/soc/bcm/Kconfig
+--- linux-original/sound/soc/bcm/Kconfig	2019-04-26 13:21:45.061447773 +0200
++++ linux/sound/soc/bcm/Kconfig	2019-04-25 16:15:07.516256000 +0200
+@@ -78,6 +78,13 @@ config SND_BCM2708_SOC_RPI_CIRRUS
+          Say Y or M if you want to add support for the Wolfson and
+          Cirrus Logic audio cards.
+ 
++config SND_BCM2708_SOC_RPI_DABPI
++        tristate "Support for DABPi featuring a Si4688 FM/FMHD/DAB receiver"
++        depends on SND_BCM2708_SOC_I2S || SND_BCM2835_SOC_I2S
++        select SND_SOC_SI468X
++        help
++         Say Y or M if you want to add support for DABPi radio receiver board
++
+ config SND_BCM2708_SOC_RPI_DAC
+         tristate "Support for RPi-DAC"
+         depends on SND_BCM2708_SOC_I2S || SND_BCM2835_SOC_I2S
+diff -rupN linux-original/sound/soc/bcm/Makefile linux/sound/soc/bcm/Makefile
+--- linux-original/sound/soc/bcm/Makefile	2019-04-26 13:21:45.061447773 +0200
++++ linux/sound/soc/bcm/Makefile	2019-04-25 16:17:55.752939000 +0200
+@@ -34,6 +34,7 @@ snd-soc-pisound-objs := pisound.o
+ snd-soc-fe-pi-audio-objs := fe-pi-audio.o
+ snd-soc-rpi-simple-soundcard-objs := rpi-simple-soundcard.o
+ snd-soc-rpi-wm8804-soundcard-objs := rpi-wm8804-soundcard.o
++snd-soc-rpi-dabpi-objs := rpi-dabpi.o
+ 
+ obj-$(CONFIG_SND_BCM2708_SOC_3DLAB_NANO_PLAYER) += snd-soc-3dlab-nano-player.o
+ obj-$(CONFIG_SND_BCM2708_SOC_GOOGLEVOICEHAT_SOUNDCARD)  += snd-soc-googlevoicehat-codec.o
+@@ -50,6 +51,7 @@ obj-$(CONFIG_SND_AUDIOSENSE_PI) += snd-s
+ obj-$(CONFIG_SND_DIGIDAC1_SOUNDCARD) += snd-soc-digidac1-soundcard.o
+ obj-$(CONFIG_SND_BCM2708_SOC_DIONAUDIO_LOCO) += snd-soc-dionaudio-loco.o
+ obj-$(CONFIG_SND_BCM2708_SOC_DIONAUDIO_LOCO_V2) += snd-soc-dionaudio-loco-v2.o
++obj-$(CONFIG_SND_BCM2708_SOC_RPI_DABPI) += snd-soc-rpi-dabpi.o
+ obj-$(CONFIG_SND_BCM2708_SOC_ALLO_BOSS_DAC) += snd-soc-allo-boss-dac.o
+ obj-$(CONFIG_SND_BCM2708_SOC_ALLO_PIANO_DAC) += snd-soc-allo-piano-dac.o
+ obj-$(CONFIG_SND_BCM2708_SOC_ALLO_PIANO_DAC_PLUS) += snd-soc-allo-piano-dac-plus.o
+diff -rupN linux-original/sound/soc/bcm/rpi-dabpi.c linux/sound/soc/bcm/rpi-dabpi.c
+--- linux-original/sound/soc/bcm/rpi-dabpi.c	1970-01-01 01:00:00.000000000 +0100
++++ linux/sound/soc/bcm/rpi-dabpi.c	2019-04-25 16:15:07.516256000 +0200
+@@ -0,0 +1,113 @@
++/*
++ * ASoC driver for DABPi using a SI468X FM/FMHD/DAB+ receiver
++ * connected to a Raspberry Pi
++ *
++ * Author:      Bjoern Biesenbach, <bjoern@bjoern-b.de>; Heiko Jehmlich <hje@jecons.de>
++ * Copyright 2016
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++#include <linux/module.h>
++#include <linux/platform_device.h>
++
++#include <sound/core.h>
++#include <sound/pcm.h>
++#include <sound/pcm_params.h>
++#include <sound/soc.h>
++#include <sound/jack.h>
++
++static int snd_rpi_rpi_dabpi_init(struct snd_soc_pcm_runtime *rtd)
++{
++	return 0;
++}
++
++static int snd_rpi_rpi_dabpi_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
++{
++	return 0;
++}
++
++/* machine stream operations */
++static struct snd_soc_ops snd_rpi_rpi_dabpi_ops = {
++	.hw_params = snd_rpi_rpi_dabpi_hw_params,
++};
++
++static struct snd_soc_dai_link snd_rpi_rpi_dabpi_dai[] = {
++{
++	.name			= "DABPi",
++	.stream_name	= "DABPi Hifi",
++	.cpu_dai_name	= "bcm2708-i2s.0",
++	.codec_dai_name	= "si468x-hifi",
++	.platform_name	= "bcm2708-i2s.0",
++	.codec_name		= "si468x-codec",
++	.dai_fmt		= SND_SOC_DAIFMT_I2S
++					| SND_SOC_DAIFMT_NB_NF
++					| SND_SOC_DAIFMT_CBS_CFS, // rpi is clock and frame sync master
++	.ops			= &snd_rpi_rpi_dabpi_ops,
++	.init           = snd_rpi_rpi_dabpi_init,
++},
++};
++
++/* audio machine driver */
++static struct snd_soc_card snd_rpi_rpi_dabpi = {
++	.name		= "snd_rpi_rpi_dabpi",
++	.owner		= THIS_MODULE,
++	.dai_link	= snd_rpi_rpi_dabpi_dai,
++	.num_links	= ARRAY_SIZE(snd_rpi_rpi_dabpi_dai),
++};
++
++static int snd_rpi_rpi_dabpi_probe(struct platform_device *pdev)
++{
++	int ret = 0;
++
++	snd_rpi_rpi_dabpi.dev = &pdev->dev;
++
++	if (pdev->dev.of_node) {
++		struct device_node *i2s_node;
++		struct snd_soc_dai_link *dai = &snd_rpi_rpi_dabpi_dai[0];
++		i2s_node = of_parse_phandle(pdev->dev.of_node, "i2s-controller", 0);
++
++		if (i2s_node) {
++			dai->cpu_dai_name = NULL;
++			dai->cpu_of_node = i2s_node;
++			dai->platform_name = NULL;
++			dai->platform_of_node = i2s_node;
++		}
++	}
++
++	ret = snd_soc_register_card(&snd_rpi_rpi_dabpi);
++	if (ret) {
++		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n", ret);
++	}
++
++	return ret;
++}
++
++static int snd_rpi_rpi_dabpi_remove(struct platform_device *pdev)
++{
++	return snd_soc_unregister_card(&snd_rpi_rpi_dabpi);
++}
++
++static const struct of_device_id snd_rpi_rpi_dabpi_of_match[] = {
++        { .compatible = "rpi,rpi-dabpi", },
++        {},
++};
++MODULE_DEVICE_TABLE(of, snd_rpi_rpi_dabpi_of_match);
++
++static struct platform_driver snd_rpi_rpi_dabpi_driver = {
++	.driver = {
++		.name   = "snd-rpi-dabpi",
++		.owner  = THIS_MODULE,
++		.of_match_table = snd_rpi_rpi_dabpi_of_match,
++	},
++	.probe	        = snd_rpi_rpi_dabpi_probe,
++	.remove	        = snd_rpi_rpi_dabpi_remove,
++};
++
++module_platform_driver(snd_rpi_rpi_dabpi_driver);
++
++MODULE_AUTHOR("Bjoern Biesenbach");
++MODULE_DESCRIPTION("ASoC Driver for Raspberry Pi connected to DABPi board (SI4688)");
++MODULE_LICENSE("GPL");
+diff -rupN linux-original/sound/soc/codecs/Kconfig linux/sound/soc/codecs/Kconfig
+--- linux-original/sound/soc/codecs/Kconfig	2019-04-26 13:21:45.061447773 +0200
++++ linux/sound/soc/codecs/Kconfig	2019-04-25 20:53:38.392508000 +0200
+@@ -146,6 +146,7 @@ config SND_SOC_ALL_CODECS
+ 	select SND_SOC_RT5682 if I2C
+ 	select SND_SOC_SGTL5000 if I2C
+ 	select SND_SOC_SI476X if MFD_SI476X_CORE
++        select SND_SOC_SI468X
+ 	select SND_SOC_SIMPLE_AMPLIFIER
+ 	select SND_SOC_SIRF_AUDIO_CODEC
+ 	select SND_SOC_SPDIF
+@@ -892,6 +893,9 @@ config SND_SOC_SGTL5000
+ config SND_SOC_SI476X
+ 	tristate
+ 
++config SND_SOC_SI468X
++	tristate
++
+ config SND_SOC_SIGMADSP
+ 	tristate
+ 	select CRC32
+@@ -1327,4 +1331,10 @@ config SND_SOC_I_SABRE_CODEC
+ 	tristate "Audiophonics I-SABRE Codec"
+ 	depends on I2C
+ 
++config SND_BCM2708_SOC_RPI_DABPI
++        tristate "Support for DABPi featuring a Si4688 FM/FMHD/DAB receiver"
++        depends on SND_BCM2708_SOC_I2S || SND_BCM2835_SOC_I2S
++        help
++         Say Y or M if you want to add support for DABPi radio receiver board
++
+ endmenu
+diff -rupN linux-original/sound/soc/codecs/Makefile linux/sound/soc/codecs/Makefile
+--- linux-original/sound/soc/codecs/Makefile	2019-04-26 13:21:45.061447773 +0200
++++ linux/sound/soc/codecs/Makefile	2019-04-25 20:59:55.586233000 +0200
+@@ -156,6 +156,7 @@ snd-soc-alc5632-objs := alc5632.o
+ snd-soc-sigmadsp-objs := sigmadsp.o
+ snd-soc-sigmadsp-i2c-objs := sigmadsp-i2c.o
+ snd-soc-sigmadsp-regmap-objs := sigmadsp-regmap.o
++snd-soc-si468x-objs := si468x.o
+ snd-soc-si476x-objs := si476x.o
+ snd-soc-sirf-audio-codec-objs := sirf-audio-codec.o
+ snd-soc-spdif-tx-objs := spdif_transmitter.o
+@@ -419,6 +420,7 @@ obj-$(CONFIG_SND_SOC_SIGMADSP)	+= snd-so
+ obj-$(CONFIG_SND_SOC_SIGMADSP_I2C)	+= snd-soc-sigmadsp-i2c.o
+ obj-$(CONFIG_SND_SOC_SIGMADSP_REGMAP)	+= snd-soc-sigmadsp-regmap.o
+ obj-$(CONFIG_SND_SOC_SI476X)	+= snd-soc-si476x.o
++obj-$(CONFIG_SND_SOC_SI468X)	+= snd-soc-si468x.o
+ obj-$(CONFIG_SND_SOC_SPDIF)	+= snd-soc-spdif-rx.o snd-soc-spdif-tx.o
+ obj-$(CONFIG_SND_SOC_SIRF_AUDIO_CODEC) += sirf-audio-codec.o
+ obj-$(CONFIG_SND_SOC_SSM2305)	+= snd-soc-ssm2305.o
+@@ -516,6 +518,7 @@ obj-$(CONFIG_SND_SOC_WM_ADSP)	+= snd-soc
+ obj-$(CONFIG_SND_SOC_WM_HUBS)	+= snd-soc-wm-hubs.o
+ obj-$(CONFIG_SND_SOC_ZX_AUD96P22) += snd-soc-zx-aud96p22.o
+ 
++
+ # Amp
+ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
+ obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
+diff -rupN linux-original/sound/soc/codecs/si468x.c linux/sound/soc/codecs/si468x.c
+--- linux-original/sound/soc/codecs/si468x.c	1970-01-01 01:00:00.000000000 +0100
++++ linux/sound/soc/codecs/si468x.c	2019-04-26 13:50:45.918086076 +0200
+@@ -0,0 +1,125 @@
++/*
++ * sound/soc/codecs/si468x.c -- Codec driver for SI468X chips
++ *
++ * Copyright (C) 2012 Innovative Converged Devices(ICD)
++ * Copyright (C) 2013 Andrey Smirnov
++ * Copyright (C) 2014 Bjoern Biesenbach
++ * Copyright (C) 2016 Heiko Jehmlich
++ *
++ * Author: Bjoern Biesenbach <bjoern.biesenbach@gmail.com>; Heiko Jehmlich <hje@jecons.de>
++ * Based on si468x.c of Andrey Smirnov <andrew.smirnov@gmail.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; version 2 of the License.
++ *
++ * This program is distributed in the hope that it will be useful, but
++ * WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ */
++
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <sound/pcm.h>
++#include <sound/pcm_params.h>
++#include <sound/soc.h>
++#include <sound/soc-dai.h>
++#include <sound/initval.h>
++#include <linux/platform_device.h>
++#include <sound/core.h>
++#include <linux/init.h>
++#include <linux/pci.h>
++#include <linux/regmap.h>
++#include <linux/i2c.h>
++
++
++
++static int si468x_codec_set_dai_fmt(struct snd_soc_dai *codec_dai,
++		unsigned int fmt)
++{
++	return 0;
++}
++
++static int si468x_codec_hw_params(struct snd_pcm_substream *substream,
++		struct snd_pcm_hw_params *params,
++		struct snd_soc_dai *dai)
++{
++	int rate;
++
++	rate = params_rate(params);
++	if (rate != 48000) {
++//		dev_err(dai->codec->dev, "Rate: %d is not supported\n", rate);
++		dev_err(dai->component->dev, "Rate: %d is not supported\n", rate);
++		return -EINVAL;
++	}
++	return 0;
++}
++
++static struct snd_soc_dai_ops si468x_dai_ops = {
++	.hw_params	= si468x_codec_hw_params,
++	.set_fmt	= si468x_codec_set_dai_fmt,
++};
++
++static const struct snd_soc_dapm_widget si468x_dapm_widgets[] = {
++	SND_SOC_DAPM_OUTPUT("LOUT"),
++	SND_SOC_DAPM_OUTPUT("ROUT"),
++};
++
++static const struct snd_soc_dapm_route si468x_dapm_routes[] = {
++	{ "Capture", NULL, "LOUT" },
++	{ "Capture", NULL, "ROUT" },
++};
++
++static struct snd_soc_dai_driver si468x_dai = {
++	.name		= "si468x-hifi",
++	.capture	= {
++		.stream_name	= "Capture",
++		.channels_min	= 2,
++		.channels_max	= 2,
++		.rates 			= SNDRV_PCM_RATE_48000,
++		.formats		= SNDRV_PCM_FMTBIT_S16_LE
++	},
++	.ops		= &si468x_dai_ops,
++};
++
++static struct snd_soc_component_driver soc_codec_dev_si468x = {
++	.dapm_widgets = si468x_dapm_widgets,
++	.num_dapm_widgets = ARRAY_SIZE(si468x_dapm_widgets),
++	.dapm_routes = si468x_dapm_routes,
++	.num_dapm_routes = ARRAY_SIZE(si468x_dapm_routes),
++};
++
++static int si468x_probe(struct platform_device *pdev)
++{
++	return snd_soc_register_component(&pdev->dev, &soc_codec_dev_si468x, &si468x_dai, 1);
++}
++
++static int si468x_remove(struct platform_device *pdev)
++{
++	snd_soc_unregister_component(&pdev->dev);
++	return 0;
++}
++
++static const struct of_device_id si468x_of_match[] = {
++        { .compatible = "ti,si468x", },
++        { }
++};
++MODULE_DEVICE_TABLE(of, si468x_of_match);
++
++static struct platform_driver si468x_platform_driver = {
++	.probe		= si468x_probe,
++	.remove		= si468x_remove,
++	.driver		= {
++		.name	= "si468x-codec",
++		.owner	= THIS_MODULE,
++		.of_match_table = of_match_ptr(si468x_of_match),
++	},
++};
++
++module_platform_driver(si468x_platform_driver);
++
++MODULE_AUTHOR("Bjoern Biesenbach <bjoern@bjoern-b.de>");
++MODULE_DESCRIPTION("ASoC Si468X codec driver");
++MODULE_LICENSE("GPL");
